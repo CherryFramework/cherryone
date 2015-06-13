@@ -59,6 +59,16 @@ function cherryone_breadcrumbs_wrapper_format( $args ) {
 add_filter('comment_form_defaults', 'wpsites_modify_comment_form');
 function wpsites_modify_comment_form($arg) {
 
+	$arg = wp_parse_args( $arg );
+	if ( ! isset( $arg['format'] ) )
+		$arg['format'] = current_theme_supports( 'html5', 'comment-form' ) ? 'html5' : 'xhtml';
+
+	$req      = get_option( 'require_name_email' );
+	$aria_req = ( $req ? " aria-required='true'" : '' );
+	$html_req = ( $req ? " required='required'" : '' );
+	$html5    = 'html5' === $arg['format'];
+	$commenter = wp_get_current_commenter();
+
 	$arg['fields']['author'] = '<p class="comment-form-author"><input id="author" name="author" type="text" placeholder="' . __( 'Name:', 'cherry' ) . '" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . $html_req . ' />';
 	$arg['fields']['email'] = '<p class="comment-form-email"><input id="email" name="email" ' . ( $html5 ? 'type="email"' : 'type="text"' ) . ' placeholder="' . __( 'E-mail:', 'cherry' ) . '" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30" aria-describedby="email-notes"' . $aria_req . $html_req  . ' /></p>';
 	$arg['fields']['url'] =  '<p class="comment-form-url"><input id="url" name="url" ' . ( $html5 ? 'type="url"' : 'type="text"' ) . ' placeholder="' . __( 'Website:', 'cherry' ) . '" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" /></p>';
@@ -107,97 +117,55 @@ add_action( 'wp_enqueue_scripts', 'cherry_child_theme_assets' );
 function cherry_child_register_plugins( $plugins ) {
 
 	$plugins = array(
-		'cherry-testimonials' => array(
-			'name'    => 'Cherry Testimonials',
-			'slug'    => 'cherry-testimonials',
-			'source'  => 'cherry',
-			'version' => ''
-		),
-		'woocommerce' => array(
-			'name'    => 'WooCommerce',
-			'slug'    => 'woocommerce',
-			'source'  => 'wordpress',
-			'version' => ''
-		),
-		'shortcodes-ultimate' => array(
-			'name'         => 'Shortcodes ultimate', 
-			'slug'         => 'shortcodes-ultimate', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/shortcodes-ultimate.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
-		),
 		'contact-form-7' => array(
-			'name'         => 'Contact form 7', 
-			'slug'         => 'contact-form-7', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/contact-form-7.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
+			'name'    => 'Contact Form 7',
+			'slug'    => 'contact-form-7',
+			'source'  => 'wordpress'
 		),
-		'cherry-testimonials' => array(
-			'name'         => 'Cherry testimonials', 
-			'slug'         => 'cherry-testimonials', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-testimonials.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
-		),
-		'cherry-team' => array(
-			'name'         => 'Cherry team', 
-			'slug'         => 'cherry-team', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-team.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
-		),
-		'cherry-social' => array(
-			'name'         => 'Cherry social', 
-			'slug'         => 'cherry-social', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-social.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
-		),
-		'cherry-simple-slider' => array(
-			'name'         => 'Cherry simple slider', 
-			'slug'         => 'cherry-simple-slider', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-simple-slider.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
+		'cherry-shortcodes' => array(
+			'name'         => 'Cherry Shortcodes', 
+			'slug'         => 'cherry-shortcodes', 
+			'source'       => 'cherry-free'
 		),
 		'cherry-shortcodes-templater' => array(
 			'name'         => 'Cherry shortcodes templater', 
 			'slug'         => 'cherry-shortcodes-templater', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-shortcodes-templater.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
+			'source'       => 'cherry-free'
+		),
+		'cherry-simple-slider' => array(
+			'name'         => 'Cherry simple slider', 
+			'slug'         => 'cherry-simple-slider', 
+			'source'       => 'cherry-free'
 		),
 		'cherry-portfolio' => array(
 			'name'         => 'Cherry portfolio', 
 			'slug'         => 'cherry-portfolio', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-portfolio.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
+			'source'       => 'cherry-free'
+		),
+		'cherry-testimonials' => array(
+			'name'         => 'Cherry testimonials', 
+			'slug'         => 'cherry-testimonials', 
+			'source'       => 'cherry-free'
+		),
+		'cherry-team' => array(
+			'name'         => 'Cherry team', 
+			'slug'         => 'cherry-team', 
+			'source'       => 'cherry-free'
+		),
+		'cherry-social' => array(
+			'name'         => 'Cherry social', 
+			'slug'         => 'cherry-social', 
+			'source'       => 'cherry-free'
 		),
 		'cherry-grid' => array(
 			'name'         => 'Cherry grid', 
 			'slug'         => 'cherry-grid', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-grid.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
+			'source'       => 'cherry-free'
 		),
 		'cherry-charts' => array(
 			'name'         => 'Cherry charts', 
 			'slug'         => 'cherry-charts', 
-			'source'       => CHILD_DIR . '/assets/includes/plugins/cherry-charts.zip',
-			'required'     => true,
-			'version'      => '1',
-			'external_url' => ''
+			'source'       => 'cherry-free'
 		)
 	);
 
@@ -277,7 +245,18 @@ function cherry_child_menu_meta( $extra_meta ) {
  */
 function cherry_child_theme_assets() {
 	wp_enqueue_script( 'cherry_child_script', get_stylesheet_directory_uri() . '/assets/js/script.js', array( 'jquery' ), '1.0', true );
+	wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', '', '4.3' );
 }
+
+
+add_filter( 'cherry_menu_toogle_endpoint', 'cherryone_menu_toogle_endpoint' );
+function cherryone_menu_toogle_endpoint($arg){
+
+	$arg = 500;
+
+	return $arg;
+}
+
 
 /**
  * Additional data for grid shortode templater
@@ -306,6 +285,11 @@ function cherryone_grid_macros( $buttons, $shortcode ) {
 
 	return $buttons;
 
+}
+
+add_action( 'wp_head', 'cherryone_add_custom_meta' );
+function cherryone_add_custom_meta(){
+	echo '<meta name = "format-detection" content = "telephone=no" />';
 }
 
 /**
