@@ -199,6 +199,10 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		 */
 		public function rename_github_zip( $upgrade_dir, $remote_dir, $skin_upgrader ) {
 
+			if ( false === strpos( $upgrade_dir, 'github' ) ) {
+				return $upgrade_dir;
+			}
+
 			if ( $skin_upgrader->bulk ) {
 
 				if ( ! is_array( $skin_upgrader->skin->plugin_names ) ) {
