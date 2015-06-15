@@ -199,7 +199,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		 */
 		public function rename_github_zip( $upgrade_dir, $remote_dir, $skin_upgrader ) {
 
-			if ( false === strpos( $upgrade_dir, 'github' ) ) {
+			if ( false === strpos( $upgrade_dir, 'CherryFramework' ) ) {
 				return $upgrade_dir;
 			}
 
@@ -212,9 +212,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 				$slug = str_replace(
 					' ', '-', strtolower( $skin_upgrader->skin->plugin_names[$skin_upgrader->skin->i] )
 				);
-
-				$new_upgrate_dir = $this->rename_plugin_dir( $slug, $upgrade_dir );
-				return $new_upgrate_dir;
+				$new_upgrade_dir = $this->rename_plugin_dir( $slug, $upgrade_dir );
+				return $new_upgrade_dir;
 			}
 
 			if (
@@ -231,9 +230,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 			if ( ! $rewrite ) {
 				return $upgrade_dir;
 			}
-
-			$new_upgrate_dir = $this->rename_plugin_dir( $rewrite, $upgrade_dir_path );
-			return $new_upgrate_dir;
+			$new_upgrade_dir = $this->rename_plugin_dir( $rewrite, $upgrade_dir );
+			return $new_upgrade_dir;
 		}
 
 		/**
@@ -242,11 +240,11 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		function rename_plugin_dir( $slug, $upgrade_dir ) {
 
 			$upgrade_dir_path = pathinfo( $upgrade_dir );
-			$new_upgrate_dir  = trailingslashit( $upgrade_dir_path['dirname'] ) . trailingslashit( $slug );
+			$new_upgrade_dir  = trailingslashit( $upgrade_dir_path['dirname'] ) . trailingslashit( $slug );
 
-			rename( $upgrade_dir, $new_upgrate_dir );
+			rename( $upgrade_dir, $new_upgrade_dir );
 
-			return $new_upgrate_dir;
+			return $new_upgrade_dir;
 
 		}
 
