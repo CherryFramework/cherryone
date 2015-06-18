@@ -241,6 +241,13 @@ function cherryone_register_plugins() {
 			'source'       => 'https://api.github.com/repos/CherryFramework/cherry-charts/zipball/',
 			'required'     => true,
 			'external_url' => 'https://github.com/CherryFramework/cherry-charts',
+		),
+		array(
+			'name'         => 'Cherry Grid',
+			'slug'         => 'cherry-grid',
+			'source'       => 'https://api.github.com/repos/CherryFramework/cherry-grid/zipball/',
+			'required'     => true,
+			'external_url' => 'https://github.com/CherryFramework/cherry-grid',
 		)
 	);
 
