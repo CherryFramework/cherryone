@@ -236,18 +236,18 @@ function cherryone_register_plugins() {
 			'external_url' => 'https://github.com/CherryFramework/cherry-portfolio',
 		),
 		array(
+			'name'         => 'Cherry grid',
+			'slug'         => 'cherry-grid',
+			'source'       => 'https://api.github.com/repos/CherryFramework/cherry-grid/zipball/',
+			'required'     => true,
+			'external_url' => 'https://github.com/CherryFramework/cherry-grid',
+		),
+		array(
 			'name'         => 'Cherry Charts',
 			'slug'         => 'cherry-charts',
 			'source'       => 'https://api.github.com/repos/CherryFramework/cherry-charts/zipball/',
 			'required'     => true,
 			'external_url' => 'https://github.com/CherryFramework/cherry-charts',
-		),
-		array(
-			'name'         => 'Cherry Grid',
-			'slug'         => 'cherry-grid',
-			'source'       => 'https://api.github.com/repos/CherryFramework/cherry-grid/zipball/',
-			'required'     => true,
-			'external_url' => 'https://github.com/CherryFramework/cherry-grid',
 		)
 	);
 
@@ -372,6 +372,28 @@ function cherryone_menu_toogle_endpoint($arg){
 
 	return $arg;
 }
+
+
+add_filter( 'cherry_slider_default_settings', 'cherryone_slider_settings' );
+function cherryone_slider_settings($slider_options){
+	unset($slider_options['cherry-slider-thumbnails-position']);
+	unset($slider_options['cherry-slider-orientation']);
+
+	return $slider_options;
+}
+
+
+
+add_filter('cherry_sticky_selectors', 'theme3621_cherry_sticky_selectors');
+function theme3621_cherry_sticky_selectors($selectors){
+	$selectors =  array(
+		'#menu-primary'           => __( 'Main menu', 'cherry' ),
+		'#static-area-header-top' => __( 'Header top static area', 'cherry' ),
+	);
+
+	return $selectors;
+}
+
 
 
 /**

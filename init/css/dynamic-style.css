@@ -106,6 +106,9 @@
 }
 
 
+.cherry-breadcrumbs .cherry-breadcrumbs_content .cherry-breadcrumbs_browse {
+	color: $color-link-hover;
+}
 .cherry-breadcrumbs .page-title {
 	color: $typography-header-menu[color];
 }
@@ -208,6 +211,12 @@
 .cherry-follow_list .cherry-follow_item .cherry-follow_link:before {
 	background: @contrast( $color-primary, $color-secondary, #fff );
 }
+.widget .cherry-follow_list .cherry-follow_item .cherry-follow_link {
+	color: $color-link-hover;
+}
+.widget .cherry-follow_list .cherry-follow_item .cherry-follow_link:hover {
+	color: #fff;
+}
 
 
 
@@ -278,6 +287,15 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	border-color: $color-secondary;
 	background: $color-secondary;
 }
+.static-simple-slider .sp-button {
+	border-color: $color-primary;
+}
+.static-simple-slider .sp-button.sp-selected-button {
+	background: $color-primary;
+}
+.static-simple-slider .slider-container {
+	background: $body-background[color];
+}
 
 
 
@@ -321,12 +339,27 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 
 
-.content-sidebar-wrapper .widget ul li a {
+.widget ul li a {
 	color: $color-secondary;
 }
-.content-sidebar-wrapper .widget ul li a:hover {
+.widget ul li a:hover {
 	color: $color-primary;
 }
+.widget_categories li a:hover:before {
+	color: $color-link;
+}
+
+
+
+
+.error-404-num {
+	font-family: typography-h1[family];
+	font-size:120px;
+	line-height:120px;
+	font-weight:bold;
+	color: $color-secondary;
+}
+
 
 
 
