@@ -1319,10 +1319,12 @@ object {
 
 a {
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  outline: none; }
 
 a:hover, a:focus {
-  text-decoration: none; }
+  text-decoration: none;
+  outline: none; }
 
 p {
   margin: 0 0 25px; }
@@ -2006,8 +2008,19 @@ ol.comment-list .children li > .children {
   padding-top: 40px;
   padding-bottom: 45px; }
 
+.cherry-box.text-center {
+  text-align: center; }
+  .cherry-box.text-center h3 {
+    display: inline-block;
+    padding: 0 10px; }
+    @media (max-width: 767px) {
+      .cherry-box.text-center h3 {
+        display: block; } }
+
 .cherry-banner {
   overflow: hidden; }
+  .cherry-banner.same-height > div {
+    height: 100%; }
   .cherry-banner .cherry-banner_wrap {
     padding: 100px 0 90px; }
   .cherry-banner .cherry-banner_title {
@@ -2034,7 +2047,7 @@ ol.comment-list .children li > .children {
         font-size: 40px;
         line-height: 48px; } }
   .cherry-banner .cherry-banner_content {
-    padding: 0 10%; }
+    padding: 0 8%; }
 
 .cherry-banner.animated .cherry-banner_title {
   -webkit-transition: all 0.3s ease;
@@ -2279,6 +2292,14 @@ ol.comment-list .children li > .children {
     font-size: 15px;
     line-height: 20px;
     margin-bottom: 30px; }
+  #footer .widget_recent_entries li {
+    margin-bottom: 15px; }
+  #footer .widget_recent_entries a {
+    font-size: 14px; }
+    #footer .widget_recent_entries a:hover {
+      font-weight: bold; }
+  #footer .widget_recent_entries .post-date {
+    display: block; }
 
 #static-area-footer-social {
   text-align: right; }
@@ -2420,7 +2441,7 @@ ol.comment-list .children li > .children {
     margin-right: 10px; }
 .wpcf7 form .wpcf7-response-output {
   margin: 0;
-  padding: 0;
+  padding: 20px 15px 0;
   border: none;
   background: none; }
 
@@ -2437,6 +2458,14 @@ ol.comment-list .children li > .children {
   border-radius: 5px; }
 
 /*/ Misc */
+.table-display {
+  display: table;
+  width: 100%;
+  height: 100%; }
+  .table-display .table-cell {
+    display: table-cell;
+    vertical-align: middle; }
+
 .negative-margin {
   margin-bottom: -25px; }
 

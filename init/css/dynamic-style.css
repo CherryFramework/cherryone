@@ -217,6 +217,9 @@
 .widget .cherry-follow_list .cherry-follow_item .cherry-follow_link:hover {
 	color: #fff;
 }
+#footer .widget_recent_entries a {
+	color: $color-link;
+}
 
 
 
