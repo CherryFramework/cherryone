@@ -410,7 +410,7 @@ add_filter( 'cherry_grid_shortcode_data_callbacks', 'cherryone_testi_grid_callba
  */
 function cherryone_grid_macros( $buttons, $shortcode ) {
 
-	if ( 'cherry_grid' != $shortcode ) {
+	if ( 'grid' != $shortcode ) {
 		return $buttons;
 	}
 
