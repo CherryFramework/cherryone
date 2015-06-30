@@ -1384,7 +1384,7 @@ h5 {
       border: none;
       background: none; }
 
-/*/ Header */
+/* Header */
 /* Logo
 ---------------------------------------- */
 .site-title {
@@ -1397,7 +1397,7 @@ h5 {
 @media (min-width: 768px) and (max-width: 991px) {
   .site-title {
     margin-top: 15px; } }
-/*/ Logo */
+/* Logo */
 /* Navigation (Menu)
 ================================================== */
 .cherry-navigation-arrow .menu-primary li > a::after {
@@ -1511,7 +1511,7 @@ h5 {
       .cherry-breadcrumbs .cherry-breadcrumbs_content .cherry-breadcrumbs_wrap .cherry-breadcrumbs_item .cherry-breadcrumbs_item_target, .cherry-breadcrumbs .cherry-breadcrumbs_content .cherry-breadcrumbs_wrap .cherry-breadcrumbs_item .cherry-breadcrumbs_item_link, .cherry-breadcrumbs .cherry-breadcrumbs_content .cherry-breadcrumbs_wrap .cherry-breadcrumbs_item .cherry-breadcrumbs_item_sep {
         font: 12px/20px 'Raleway', sans-serif; }
 
-/*/ Navigation (Menu) */
+/* Navigation (Menu) */
 /* Pagination
 ================================================== */
 /*Blog posts list pagination*/
@@ -1549,7 +1549,7 @@ h5 {
   line-height: 20px;
   text-decoration: none !important; }
 
-/*/ Pagination (Menu) */
+/* Pagination (Menu) */
 /* Slider 
 ================================================== */
 .static-simple-slider .sp-layer {
@@ -1774,7 +1774,7 @@ h5 {
 .cherry-portfolio-ajax-loader {
   background: none; }
 
-/*/ Portfolio  */
+/* Portfolio  */
 /* #Content
 ================================================== */
 .site-content {
@@ -1786,7 +1786,7 @@ body.page .hentry {
 body.page .entry-meta {
   margin: 0; }
 
-/*/ Content */
+/* Content */
 /* #Blog 
 ================================================== */
 .single .hentry {
@@ -1879,7 +1879,7 @@ body .post-gallery_prev {
 body .post-gallery_next {
   right: 30px; }
 
-/*/ Blog  */
+/* Blog  */
 /* #Comments
 ================================================== */
 .page .comments-area {
@@ -1967,7 +1967,7 @@ ol.comment-list .children li > .children {
       width: auto;
       border: none; }
 
-/*/ Comments */
+/* Comments */
 /* #Team
 ================================================== */
 .team-wrap .team-listing_item {
@@ -1981,7 +1981,7 @@ ol.comment-list .children li > .children {
     width: auto;
     height: auto; }
 
-/*/ Team */
+/* Team */
 /* #Sidebar
 ================================================== */
 .site-content .widget-area {
@@ -1994,7 +1994,7 @@ ol.comment-list .children li > .children {
   .site-content .widget-area .widget:first-child {
     border: none; }
 
-/*/ Sidebar */
+/* Sidebar */
 /* #Shortcodes
 ================================================== */
 .cherry-btn-primary-light {
@@ -2281,7 +2281,7 @@ ol.comment-list .children li > .children {
 @media (max-width: 991px) {
   .sm_none {
     margin-top: -30px !important; } }
-/*/ Shortcodes */
+/* Shortcodes */
 /* #Footer
 ================================================== */
 #footer {
@@ -2354,7 +2354,7 @@ ol.comment-list .children li > .children {
     transform: scale(1);
     opacity: 1; }
 
-/*/ Footer */
+/* Footer */
 /* #Widgets
 ================================================== */
 .widget {
@@ -2411,7 +2411,7 @@ ol.comment-list .children li > .children {
     .cherry_team_widget .team-wrap .team-item .team-listing_photo {
       padding-bottom: 15px; }
 
-/*/ Widgets */
+/* Widgets */
 /* #Contact form
 ================================================== */
 .wpcf7 form .wpcf7-form-control-wrap {
@@ -2445,7 +2445,7 @@ ol.comment-list .children li > .children {
   border: none;
   background: none; }
 
-/*/ Contact form */
+/* Contact form */
 .search-form .search-field {
   padding: 9px 15px;
   margin-right: 5px; }
@@ -2457,7 +2457,7 @@ ol.comment-list .children li > .children {
   border: none;
   border-radius: 5px; }
 
-/*/ Misc */
+/* Misc */
 .table-display {
   display: table;
   width: 100%;
