@@ -155,6 +155,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		 */
 		public function __construct() {
 
+			Cherry_TGMPA_Sources::get_instance();
+
 			self::$instance = $this;
 
 			$this->strings = array(
@@ -482,6 +484,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 				$plugin['slug']   = $_GET['plugin']; // Plugin slug.
 				$plugin['source'] = $_GET['plugin_source']; // Plugin source.
 
+				$plugin = apply_filters( 'cherry_tgmpa_rewrite_source', $plugin );
+
 				// Pass all necessary information via URL if WP_Filesystem is needed.
 				$url = wp_nonce_url(
 					add_query_arg(
@@ -599,6 +603,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 				$plugin['name']   = $_GET['plugin_name'];
 				$plugin['slug']   = $_GET['plugin'];
 				$plugin['source'] = $_GET['plugin_source'];
+
+				$plugin = apply_filters( 'cherry_tgmpa_rewrite_source', $plugin );
 
 				$plugin_data = get_plugins( '/' . $plugin['slug'] ); // Retrieve all plugins.
 				$plugin_file = array_keys( $plugin_data ); // Retrieve all plugin files from installed plugins.
@@ -1633,7 +1639,14 @@ if ( ! class_exists( 'TGMPA_List_Table' ) ) {
 				// Capture download links from $api or set install link to pre-packaged/private repo.
 				$i = 0;
 				foreach ( $api as $object ) {
-					$sources[$i] = isset( $object->download_link ) && 'repo' == $plugin_paths[$i] ? $object->download_link : $plugin_paths[$i];
+
+					$current_plugin_path = apply_filters(
+						'cherry_tgmpa_bulk_rewrite_source',
+						$plugin_paths[$i],
+						$plugin_installs[$i]
+					);
+
+					$sources[$i] = isset( $object->download_link ) && 'repo' == $plugin_paths[$i] ? $object->download_link : $current_plugin_path;
 					$i++;
 				}
 
@@ -2264,4 +2277,130 @@ if ( ! function_exists( 'tgmpa_load_bulk_installer' ) ) {
 			}
 		}
 	}
+}
+
+class Cherry_TGMPA_Sources {
+
+	/**
+	 * Class instance
+	 *
+	 * @var object
+	 */
+	public static $instance;
+
+	function __construct() {
+
+		add_filter( 'cherry_tgmpa_rewrite_source', array( $this, 'rewrite_source' ) );
+		add_filter( 'cherry_tgmpa_bulk_rewrite_source', array( $this, 'bulk_rewrite_source' ), 10, 2 );
+
+	}
+
+	/**
+	 * Replace cherry-free in plugin sources with GitHub URL
+	 * while bulk installation processing
+	 *
+	 * @param  array  $plugins  registered plugins array
+	 * @return array
+	 */
+	public function bulk_rewrite_source( $source, $slug ) {
+
+		if ( 'cherry-free' !== $source ) {
+			return $source;
+		}
+
+		$source = $this->get_git_url( $slug );
+		return $source;
+
+	}
+
+	/**
+	 * Replace cherry-free in plugin sources with GitHub URL
+	 *
+	 * @param  array  $plugins  registered plugins array
+	 * @return array
+	 */
+	public function rewrite_source( $plugin ) {
+
+		if ( ! is_array( $plugin ) || ! isset( $plugin['source'] ) || 'cherry-free' !== $plugin['source'] ) {
+			return $plugin;
+		}
+
+		$plugin['source'] = $this->get_git_url( $plugin['slug'] );
+
+		return $plugin;
+
+	}
+
+	/**
+	 * Get URL to gihub repo
+	 *
+	 * @param  string  $slug    plugin slug
+	 * @param  boolean $use_dev get Alpha releases or not
+	 * @return string
+	 */
+	public function get_git_url( $slug, $use_dev = false ) {
+
+		// prepare params
+		$slug = urlencode( $slug );
+		$repo    = 'CherryFramework/' . $slug;
+
+		$args = array(
+			'user-agent'        => 'WordPress',
+			'github_repository' => home_url( '/' )
+		);
+
+		$query_arg = array(
+			'github_repository' => $repo,
+			'up_query_limit'    => 1
+		);
+
+		if ( $use_dev ) {
+			$query_arg['get_alpha'] = 1;
+		}
+
+		$request_url = add_query_arg(
+			$query_arg,
+			'https://cloud.cherryframework.com/cherry-update/'
+		);
+
+		// get latest release zip URL from GitHub API
+		$git_request = wp_remote_get( $request_url, $args );
+
+		if ( is_wp_error( $git_request ) ) {
+			return false;
+		}
+
+		if ( isset( $git_request['response'] ) && 200 != $git_request['response']['code'] ) {
+			return false;
+		}
+
+		if ( empty( $git_request['body'] ) ) {
+			return false;
+		}
+
+		$respose_body = json_decode( $git_request['body'] );
+
+		if ( empty( $respose_body ) || ! isset( $respose_body->package ) ) {
+			return false;
+		}
+
+		return esc_url( $respose_body->package );
+
+	}
+
+	/**
+	 * Returns the instance.
+	 *
+	 * @since  4.0.0
+	 * @return object
+	 */
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance )
+			self::$instance = new self;
+
+		return self::$instance;
+	}
+
 }
