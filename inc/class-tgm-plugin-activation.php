@@ -192,7 +192,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 			// When the rest of WP has loaded, kick-start the rest of the class.
 			add_action( 'init', array( $this, 'init' ) );
 
-			add_filter( 'upgrader_source_selection', array( $this, 'rename_github_zip' ), 99, 3 );
+			add_filter( 'upgrader_source_selection', array( $this, 'rename_github_zip' ), 1, 3 );
 
 		}
 
@@ -207,8 +207,9 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
 			if ( $skin_upgrader->bulk ) {
 
-				if ( ! is_array( $skin_upgrader->skin->plugin_names ) ) {
-					break;
+				if ( ! isset( $skin_upgrader->skin->plugin_names ) || ! is_array( $skin_upgrader->skin->plugin_names ) ) {
+					return $upgrade_dir;
+					// break;
 				}
 
 				$slug = str_replace(
@@ -233,6 +234,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 				return $upgrade_dir;
 			}
 			$new_upgrade_dir = $this->rename_plugin_dir( $rewrite, $upgrade_dir );
+			remove_all_filters( 'upgrader_source_selection' );
 			return $new_upgrade_dir;
 		}
 
@@ -2338,7 +2340,7 @@ class Cherry_TGMPA_Sources {
 	 * @param  boolean $use_dev get Alpha releases or not
 	 * @return string
 	 */
-	public function get_git_url( $slug, $use_dev = false ) {
+	public function get_git_url( $slug, $use_dev = true ) {
 
 		// prepare params
 		$slug = urlencode( $slug );
